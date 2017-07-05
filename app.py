@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, logging
+from flask import Flask, render_template, request
 import os
 from flask_sqlalchemy import SQLAlchemy
 from numpy import mean
@@ -59,14 +59,6 @@ class Gas(db.Model):
 
     def __repr__(self):
         return '<gas {}>'.format(self.id)
-
-
-@app.before_first_request
-def setup_logging():
-    if not app.debug:
-        # In production mode, add log handler to sys.stderr.
-        app.logger.addHandler(logging.StreamHandler())
-        app.logger.setLevel(logging.INFO)
 
 
 @app.route('/')
