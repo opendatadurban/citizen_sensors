@@ -70,12 +70,12 @@ def hello_world():
 def ewv5000():
 
     if request.method == 'POST':
-        data = request.args
+        data = dict(request)
         temp = Temperature()
         rain = Rain()
         gas = Gas()
-
-        print data
+        from pprint import pprint
+        pprint(data)
 
         temp.value = mean(data['temp'])
         rain.value = mean(data['rain'])
