@@ -21,7 +21,7 @@ def hello_world():
 def ewv5000():
 
     if request.method == 'POST':
-        print request.data
+        print request.get_json()
 
     return render_template('ewok.html')
 
