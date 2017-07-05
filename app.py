@@ -1,7 +1,15 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session, logging
 import os
 
 app = Flask(__name__)
+
+
+@app.before_first_request
+def setup_logging():
+    if not app.debug:
+        # In production mode, add log handler to sys.stderr.
+        app.logger.addHandler(logging.StreamHandler())
+        app.logger.setLevel(logging.INFO)
 
 
 @app.route('/')
@@ -9,8 +17,11 @@ def hello_world():
     return 'Oh hello!'
 
 
-@app.route('/ewok-village-5000')
+@app.route('/ewok-village-5000', methods=['GET', 'POST'])
 def ewv5000():
+
+    if request.method == 'POST':
+        app.logger.log('data: %s' % request.data)
 
     return render_template('ewok.html')
 
