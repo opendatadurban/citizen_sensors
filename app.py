@@ -74,6 +74,9 @@ def ewv5000():
         temp = Temperature()
         rain = Rain()
         gas = Gas()
+
+        print data
+
         temp.value = mean(data['temp'])
         rain.value = mean(data['rain'])
         gas.value = mean(data['gas'])
