@@ -21,7 +21,7 @@ def hello_world():
 def ewv5000():
 
     if request.method == 'POST':
-        app.logger.log('data: %s' % request.data)
+        app.logger.info('data: %s' % request.data)
 
     return render_template('ewok.html')
 
