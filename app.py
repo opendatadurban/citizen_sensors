@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import os
+import json
 from flask_sqlalchemy import SQLAlchemy
 from numpy import mean
 from sqlalchemy import (
@@ -73,16 +74,16 @@ def ewv5000():
         temp = Temperature()
         rain = Rain()
         gas = Gas()
-        print request.get_json()
+        data = request.get_json()
 
-        # temp.value = mean(data['temp'])
-        # rain.value = mean(data['rain'])
-        # gas.value = mean(data['gas'])
-        #
-        # db.session.add(temp)
-        # db.session.add(rain)
-        # db.session.add(gas)
-        # db.session.commit()
+        temp.value = mean(data['temp'])
+        rain.value = mean(data['rain'])
+        gas.value = mean(data['gas'])
+
+        db.session.add(temp)
+        db.session.add(rain)
+        db.session.add(gas)
+        db.session.commit()
 
     return render_template('ewok.html')
 
