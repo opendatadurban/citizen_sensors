@@ -73,7 +73,7 @@ def ewv5000():
         temp = Temperature()
         rain = Rain()
         gas = Gas()
-        print (request.__dict__)
+        print request.get_json()
 
         # temp.value = mean(data['temp'])
         # rain.value = mean(data['rain'])
