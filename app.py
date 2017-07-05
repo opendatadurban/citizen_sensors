@@ -70,7 +70,7 @@ def hello_world():
 def ewv5000():
 
     if request.method == 'POST':
-        data = request.get_json()
+        data = request.data
         temp = Temperature()
         rain = Rain()
         gas = Gas()
