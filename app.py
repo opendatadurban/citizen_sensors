@@ -1,13 +1,64 @@
 from flask import Flask, render_template, request, session, logging
 import os
 from flask_sqlalchemy import SQLAlchemy
-from models.data import Temperature, Rain, Gas
 from numpy import mean
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    func,
+    Boolean,
+    event,
+)
+
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
+
+
+class Temperature(db.Model):
+    """
+    A test streaming storage
+    """
+    __tablename__ = 'temperatures'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    value = Column(Integer, nullable=False)
+
+    def __repr__(self):
+        return '<temp {}>'.format(self.id)
+
+
+class Rain(db.Model):
+    """
+    A test streaming storage
+    """
+    __tablename__ = 'rains'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    value = Column(Integer, nullable=False)
+
+    def __repr__(self):
+        return '<rain {}>'.format(self.id)
+
+
+class Gas(db.Model):
+    """
+    A test streaming storage
+    """
+    __tablename__ = 'gases'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    value = Column(Integer, nullable=False)
+
+    def __repr__(self):
+        return '<gas {}>'.format(self.id)
 
 
 @app.before_first_request
