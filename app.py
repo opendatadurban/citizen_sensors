@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, logging
 import os
 from flask_sqlalchemy import SQLAlchemy
-from models import Temperature, Rain, Gas
+from models.data import Temperature, Rain, Gas
 from numpy import mean
 
 app = Flask(__name__)
