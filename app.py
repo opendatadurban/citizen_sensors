@@ -70,21 +70,19 @@ def hello_world():
 def ewv5000():
 
     if request.method == 'POST':
-        data = dict(request)
         temp = Temperature()
         rain = Rain()
         gas = Gas()
-        from pprint import pprint
-        pprint(data)
+        print (request.__dict__)
 
-        temp.value = mean(data['temp'])
-        rain.value = mean(data['rain'])
-        gas.value = mean(data['gas'])
-
-        db.session.add(temp)
-        db.session.add(rain)
-        db.session.add(gas)
-        db.session.commit()
+        # temp.value = mean(data['temp'])
+        # rain.value = mean(data['rain'])
+        # gas.value = mean(data['gas'])
+        #
+        # db.session.add(temp)
+        # db.session.add(rain)
+        # db.session.add(gas)
+        # db.session.commit()
 
     return render_template('ewok.html')
 
