@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <title>Calling All Ewoks</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../static/img/favicon.png">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(get_data);
+
+        function get_data() {
+            $.getJSON('/_stream', {},
+                function (data) {
+                    drawChart(data)
+                });
+        }
+
+        function drawChart(data) {
+            // Define the chart to be drawn.
+            var data_temp = google.visualization.arrayToDataTable(data.temperature);
+            var data_rain = google.visualization.arrayToDataTable(data.rain);
+            var data_gas = google.visualization.arrayToDataTable(data.gas);
+            var data_humidity = google.visualization.arrayToDataTable(data.humidity);
+
+            // Instantiate and draw the chart.
+            var temp_chart = new google.visualization.LineChart(document.getElementById('temperature_chart'));
+            temp_chart.draw(data_temp, {colors: ['red']});
+
+            var rain_chart = new google.visualization.LineChart(document.getElementById('rain_chart'));
+            rain_chart.draw(data_rain, {colors: ['blue']});
+
+            var gas_chart = new google.visualization.LineChart(document.getElementById('gas_chart'));
+            gas_chart.draw(data_gas, {colors: ['green']});
+
+            var humidity_chart = new google.visualization.LineChart(document.getElementById('humidity_chart'));
+            humidity_chart.draw(data_humidity, {colors: ['orange']});
+        }
+
+
+        setInterval(function () {
+            get_data()
+        }, 1000);
+
+    </script>
 </head>
 <body>
+
+<div id="temperature_chart"></div>
+<div id="rain_chart"></div>
+<div id="gas_chart"></div>
+<div id="humidity_chart"></div>
 
 </body>
 </html>
