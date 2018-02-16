@@ -92,10 +92,10 @@ def ewv5000():
         humid = Humid()
         data = request.get_json()
 
-        temp.value = mean(data['temp'])
-        rain.value = mean(data['rain'])
-        gas.value = mean(data['press'])
-        humid.value = mean(data['humid'])
+        temp.value = data['temp']
+        rain.value = data['rain']
+        gas.value = data['press']
+        humid.value = data['humid']
 
         db.session.add(temp)
         db.session.add(rain)
