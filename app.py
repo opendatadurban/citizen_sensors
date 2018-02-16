@@ -117,15 +117,15 @@ def stream():
     temperature.insert(0, ['Time', 'Temperature'])
 
     rain = [[i, x[0]] for i, x in enumerate(query2)]
-    rain.insert(0, ['Time', 'Rain'])
+    rain.insert(0, ['Time', 'Uncalibrated Temp'])
 
     gas = [[i, x[0]] for i, x in enumerate(query3)]
-    gas.insert(0, ['Time', 'Gas'])
+    gas.insert(0, ['Time', 'Pressure'])
 
     humidity = [[i, x[0]] for i, x in enumerate(query4)]
     humidity.insert(0, ['Time', 'Humidity'])
 
-    response = {'temperature': temperature, 'uncalibrated temp': rain, 'pressure': gas, 'humidity': humidity}
+    response = {'temperature': temperature, 'rain': rain, 'gas': gas, 'humidity': humidity}
 
     return jsonify(response)
 
