@@ -94,7 +94,7 @@ def ewv5000():
 
         temp.value = mean(data['temp'])
         rain.value = mean(data['rain'])
-        gas.value = mean(data['gas'])
+        gas.value = mean(data['press'])
         humid.value = mean(data['humid'])
 
         db.session.add(temp)
