@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from numpy import mean
 from sqlalchemy import (
     Column,
+    Date,
     DateTime,
     Float,
     ForeignKey,
@@ -14,67 +15,48 @@ from sqlalchemy import (
     func,
     Boolean,
     event,
+    ARRAY
 )
 
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sensors:sensors@localhost/sensors'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sensors:sensors@localhost/sensors'
 
 db = SQLAlchemy(app)
 
 
 class Temperature(db.Model):
     """
-    A test streaming storage
+    Temperature storage.
     """
     __tablename__ = 'temperatures'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    value = Column(Integer, nullable=False)
+    values = Column(ARRAY(Float), nullable=False)
+    times = Column(ARRAY(DateTime), nullable=False)
+    date = Column(Date, nullable=False)
+    sensor_id = Column(String, nullable=False)
 
     def __repr__(self):
         return '<temp {}>'.format(self.id)
 
 
-class Rain(db.Model):
+class WindSpeed(db.Model):
     """
-    A test streaming storage
+    Windspeed storage.
     """
-    __tablename__ = 'rains'
+    __tablename__ = 'windspeeds'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    value = Column(Integer, nullable=False)
+    value = Column(ARRAY(Float), nullable=False)
+    times = Column(ARRAY(DateTime), nullable=False)
+    date = Column(Date, nullable=False)
+    sensor_id = Column(String, nullable=False)
 
     def __repr__(self):
-        return '<rain {}>'.format(self.id)
-
-
-class Gas(db.Model):
-    """
-    A test streaming storage
-    """
-    __tablename__ = 'gases'
-
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    value = Column(Integer, nullable=False)
-
-    def __repr__(self):
-        return '<gas {}>'.format(self.id)
-
-
-class Humid(db.Model):
-    """
-    A test streaming storage
-    """
-    __tablename__ = 'humidities'
-
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    value = Column(Integer, nullable=False)
-
-    def __repr__(self):
-        return '<humid {}>'.format(self.id)
+        return '<wind_speed {}>'.format(self.id)
 
 
 @app.route('/')
@@ -92,7 +74,7 @@ def ewv5000():
         humid = Humid()
         data = request.get_json()
 
-        temp.value = data['temp']
+        temp.values = temp.values + list(data['temp'])
         rain.value = data['rain']
         gas.value = data['press']
         humid.value = data['humid']
