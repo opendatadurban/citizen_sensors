@@ -1,2 +1,2 @@
 # citizen_sensors
-Sensoring citizens
+(Very) Early prototype weather sensor data-portal

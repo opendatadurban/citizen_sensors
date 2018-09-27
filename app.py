@@ -64,7 +64,7 @@ def hello_world():
     return 'Oh hello!'
 
 
-@app.route('/ewok-village-5000', methods=['GET', 'POST'])
+@app.route('/data', methods=['GET', 'POST'])
 def ewv5000():
 
     if request.method == 'POST':
@@ -85,7 +85,7 @@ def ewv5000():
         db.session.add(humid)
         db.session.commit()
 
-    return render_template('ewok.html')
+    return render_template('data.html')
 
 
 @app.route('/_stream', methods=['GET'])
