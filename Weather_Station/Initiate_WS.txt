@@ -1,0 +1,71 @@
+Step 0: Enable SSH and SPI
+--------
+In settings enable SSH and SPI
+Set hostname: sudo raspi-config
+sudo passwd pi
+set local region
+
+Step 1: update everything
+--------
+sudo apt update
+sudo apt-get update
+sudo apt-get install emacs
+
+
+Step 2: Set static IP
+--------
+edit /etc/dhcpcd.conf
+Add the following to the bottom:
+
+interface wlan0
+inform 192.168.1.110
+
+
+Step 3: install git
+--------
+sudo apt-get install git
+
+
+Step 4: Clone git directory
+--------
+cd Desktop
+git config --global user.name "heikoheilgendorff"
+git config --global user.email "heikoheilgendorff heikoheilgendorff@users.noreply.github.com"
+git clone https://github.com/heikoheilgendorff/Weather_Station.git
+
+
+Step 5: Run prep-system.sh
+-------
+bash prep-system.sh
+
+
+Step 6: Set up port forwarding:
+-------
+sudo weavedinstaller
+
+if you need help: https://remot3it.zendesk.com/hc/en-us/articles/115006015367-Installing-the-remot3-it-weavedconnectd-daemon-on-your-Raspberry-Pi
+
+
+Step 7: Set cronjob
+-------
+sudo crontab -e
+@reboot sh /home/pi/Desktop/Weather_Station/run_weatherstation.sh >> /home/pi/Desktop/Weather_Station/cronlog 2>&1
+
+remember to leave a blank line...
+
+Step 8: Set open file limits
+-------
+
+sudo emacs /etc/security/limits.conf
+
+add the following at the bottom:
+
+*         hard    nofile      500000
+*         soft    nofile      500000
+root      hard    nofile      500000
+root      soft    nofile      500000
+
+then reboot
+
+to check:
+type <ulimit -Sn> for soft limits, Hn for hard limits
